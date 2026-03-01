@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getCacheStats } from "@/lib/cache/explanation-cache";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/cache/stats
  * Returns cache statistics — total cached explanations and breakdown by language.
