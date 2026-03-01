@@ -87,7 +87,7 @@ export default async function PracticePage() {
           Recent Papers
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {recentPapers?.map((paper: { id: string; year: number; paper_type: string; subjects?: { code: string; name_en: string } }) => (
+          {recentPapers?.map((paper: { id: string; year: number; paper_type: string; total_marks: number; duration_minutes: number; subjects?: { code: string; name_en: string } }) => (
             <Link
               key={paper.id}
               href={`/practice/${paper.subjects?.code}/${paper.year}/${paper.paper_type}`}
