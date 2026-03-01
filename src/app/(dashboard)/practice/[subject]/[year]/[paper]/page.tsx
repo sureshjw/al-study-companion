@@ -50,7 +50,7 @@ export default async function PaperPage({ params }: PaperPageProps) {
   // Sort questions within each part
   Object.keys(questionsByPart || {}).forEach((part) => {
     questionsByPart[part as PartType]?.sort(
-      (a, b) => a.question_number - b.question_number
+      (a: QuestionType, b: QuestionType) => a.question_number - b.question_number
     );
   });
 
