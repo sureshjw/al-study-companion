@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { MCQQuestion } from "@/components/questions/mcq-question";
 import { StructuredQuestion } from "@/components/questions/structured-question";
 import { ExplanationCard } from "@/components/explanation/explanation-card";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft,

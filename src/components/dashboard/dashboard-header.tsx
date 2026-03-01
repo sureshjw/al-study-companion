@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
 interface Profile {
