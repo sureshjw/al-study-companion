@@ -9,11 +9,11 @@ import { ArrowLeft, Clock, FileText, CheckCircle2 } from "lucide-react";
 import type { SubjectCode, PaperType, PartType } from "@/types";
 
 interface PaperPageProps {
-  params: Promise<{ subject: string; year: string; paper: string }>;
+  params: { subject: string; year: string; paper: string };
 }
 
 export default async function PaperPage({ params }: PaperPageProps) {
-  const { subject: subjectCode, year: yearStr, paper: paperType } = await params;
+  const { subject: subjectCode, year: yearStr, paper: paperType } = params;
   const year = parseInt(yearStr);
   const supabase = await createServerSupabaseClient();
 

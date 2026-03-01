@@ -9,11 +9,11 @@ import { ArrowLeft, FileText, Calendar } from "lucide-react";
 import type { SubjectCode } from "@/types";
 
 interface SubjectPageProps {
-  params: Promise<{ subject: string }>;
+  params: { subject: string };
 }
 
 export default async function SubjectPage({ params }: SubjectPageProps) {
-  const { subject: subjectCode } = await params;
+  const { subject: subjectCode } = params;
   const supabase = await createServerSupabaseClient();
 
   // Validate subject code

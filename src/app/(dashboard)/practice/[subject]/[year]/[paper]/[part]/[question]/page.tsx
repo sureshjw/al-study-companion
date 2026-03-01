@@ -25,23 +25,16 @@ import type {
 } from "@/types";
 
 interface QuestionPageProps {
-  params: Promise<{
+  params: {
     subject: string;
     year: string;
     paper: string;
     part: string;
     question: string;
-  }>;
+  };
 }
 
 export default function QuestionPage({ params }: QuestionPageProps) {
-  const [resolvedParams, setResolvedParams] = useState<{
-    subject: string;
-    year: string;
-    paper: string;
-    part: string;
-    question: string;
-  } | null>(null);
   const [question, setQuestion] = useState<QuestionWithOptions | null>(null);
   const [loading, setLoading] = useState(true);
   const [answer, setAnswer] = useState("");
@@ -54,15 +47,8 @@ export default function QuestionPage({ params }: QuestionPageProps) {
   const router = useRouter();
   const { toast } = useToast();
 
-  // Resolve params
-  useEffect(() => {
-    params.then(setResolvedParams);
-  }, [params]);
-
   // Fetch question and user preferences
   useEffect(() => {
-    if (!resolvedParams) return;
-
     async function fetchData() {
       setLoading(true);
       try {
@@ -86,7 +72,7 @@ export default function QuestionPage({ params }: QuestionPageProps) {
         const { data: subject } = await supabase
           .from("subjects")
           .select("id")
-          .eq("code", resolvedParams!.subject)
+          .eq("code", params.subject)
           .single();
 
         if (!subject) {
@@ -102,8 +88,8 @@ export default function QuestionPage({ params }: QuestionPageProps) {
         const { data: paper } = await supabase
           .from("papers")
           .select("id")
-          .eq("paper_type", resolvedParams!.paper)
-          .eq("year", parseInt(resolvedParams!.year))
+          .eq("paper_type", params.paper)
+          .eq("year", parseInt(params.year))
           .eq("subject_id", subject.id)
           .single();
 
@@ -121,7 +107,7 @@ export default function QuestionPage({ params }: QuestionPageProps) {
           .from("questions")
           .select("*", { count: "exact", head: true })
           .eq("paper_id", paper.id)
-          .eq("part_type", resolvedParams!.part);
+          .eq("part_type", params.part);
         setTotalQuestions(count || 0);
 
         // Fetch the question
@@ -129,8 +115,8 @@ export default function QuestionPage({ params }: QuestionPageProps) {
           .from("questions")
           .select("*")
           .eq("paper_id", paper.id)
-          .eq("part_type", resolvedParams!.part)
-          .eq("question_number", parseInt(resolvedParams!.question))
+          .eq("part_type", params.part)
+          .eq("question_number", parseInt(params.question))
           .single();
 
         if (!questionData) {
@@ -170,7 +156,7 @@ export default function QuestionPage({ params }: QuestionPageProps) {
     }
 
     fetchData();
-  }, [resolvedParams, toast]);
+  }, [params, toast]);
 
   const fetchExplanation = async (
     questionId: string,
@@ -209,7 +195,7 @@ export default function QuestionPage({ params }: QuestionPageProps) {
   };
 
   const handleSubmit = async () => {
-    if (!question || !resolvedParams) return;
+    if (!question) return;
 
     const studentAnswer =
       question.question_type === "mcq" ? selectedOption : answer;
@@ -267,16 +253,13 @@ export default function QuestionPage({ params }: QuestionPageProps) {
     }
   };
 
-  const currentQuestionNum = resolvedParams
-    ? parseInt(resolvedParams.question)
-    : 1;
+  const currentQuestionNum = parseInt(params.question);
   const hasPrev = currentQuestionNum > 1;
   const hasNext = currentQuestionNum < totalQuestions;
 
   const navigateToQuestion = (num: number) => {
-    if (!resolvedParams) return;
     router.push(
-      `/practice/${resolvedParams.subject}/${resolvedParams.year}/${resolvedParams.paper}/${resolvedParams.part}/${num}`
+      `/practice/${params.subject}/${params.year}/${params.paper}/${params.part}/${num}`
     );
   };
 
@@ -288,7 +271,7 @@ export default function QuestionPage({ params }: QuestionPageProps) {
     );
   }
 
-  if (!question || !resolvedParams) {
+  if (!question) {
     return (
       <div className="text-center py-12">
         <p className="text-muted-foreground">Question not found.</p>
@@ -304,7 +287,7 @@ export default function QuestionPage({ params }: QuestionPageProps) {
       {/* Navigation Header */}
       <div className="flex items-center justify-between">
         <Link
-          href={`/practice/${resolvedParams.subject}/${resolvedParams.year}/${resolvedParams.paper}`}
+          href={`/practice/${params.subject}/${params.year}/${params.paper}`}
         >
           <Button variant="ghost" size="sm">
             <ArrowLeft className="h-4 w-4 mr-2" />

@@ -21,11 +21,11 @@ import {
 import type { QuestionWithOptions, LanguagePreference } from "@/types";
 
 interface QuizSessionPageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 export default function QuizSessionPage({ params }: QuizSessionPageProps) {
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const sessionId = params.id;
   const [questions, setQuestions] = useState<QuestionWithOptions[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -38,11 +38,6 @@ export default function QuizSessionPage({ params }: QuizSessionPageProps) {
   const [userLanguage, setUserLanguage] = useState<LanguagePreference>("english");
   const router = useRouter();
   const { toast } = useToast();
-
-  // Resolve params
-  useEffect(() => {
-    params.then((p) => setSessionId(p.id));
-  }, [params]);
 
   // Load quiz session
   useEffect(() => {
