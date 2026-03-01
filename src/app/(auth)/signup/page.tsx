@@ -25,6 +25,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase/client";
 import { Loader2 } from "lucide-react";
 import type { LanguagePreference } from "@/types";
+import type { Database } from "@/types/database";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -84,7 +85,10 @@ export default function SignupPage() {
         // Update profile with language preference
         const { error: profileError } = await supabase
           .from("profiles")
-          .update({ language_preference: languagePreference, name })
+          .update({
+            language_preference: languagePreference,
+            name,
+          } as Database["public"]["Tables"]["profiles"]["Update"])
           .eq("id", data.user.id);
 
         if (profileError) {
