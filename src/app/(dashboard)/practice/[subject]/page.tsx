@@ -41,7 +41,7 @@ export default async function SubjectPage({ params }: SubjectPageProps) {
     .order("year", { ascending: false });
 
   // Group papers by year
-  type PaperType = { id: string; year: number; paper_type: string; total_marks: number; duration_minutes: number };
+  type PaperType = { id: string; year: number; paper_type: string; total_marks: number; duration_minutes: number; description?: string };
   const papersByYear = papers?.reduce(
     (acc: Record<number, PaperType[]>, paper: PaperType) => {
       if (!acc[paper.year]) {
@@ -130,7 +130,7 @@ export default async function SubjectPage({ params }: SubjectPageProps) {
               <div key={year}>
                 <h3 className="text-lg font-medium mb-3">{year}</h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {papersByYear?.[year]?.map((paper: { id: string; paper_type: string; total_marks: number; duration_minutes: number }) => (
+                  {papersByYear?.[year]?.map((paper: PaperType) => (
                     <Link
                       key={paper.id}
                       href={`/practice/${subjectCode}/${year}/${paper.paper_type}`}
