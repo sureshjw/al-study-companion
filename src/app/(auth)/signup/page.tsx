@@ -84,7 +84,7 @@ export default function SignupPage() {
         // Update profile with language preference
         const { error: profileError } = await supabase
           .from("profiles")
-          .update({ language_preference: languagePreference, name } as never)
+          .update({ language_preference: languagePreference, name })
           .eq("id", data.user.id);
 
         if (profileError) {

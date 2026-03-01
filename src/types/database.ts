@@ -37,6 +37,7 @@ export type Database = {
           icon?: string;
           created_at?: string;
         };
+        Relationships: [];
       };
       papers: {
         Row: {
@@ -72,6 +73,7 @@ export type Database = {
           duration_minutes?: number;
           created_at?: string;
         };
+        Relationships: [];
       };
       questions: {
         Row: {
@@ -146,6 +148,7 @@ export type Database = {
           latex_content?: string | null;
           created_at?: string;
         };
+        Relationships: [];
       };
       question_options: {
         Row: {
@@ -175,6 +178,7 @@ export type Database = {
           is_correct?: boolean;
           created_at?: string;
         };
+        Relationships: [];
       };
       topics: {
         Row: {
@@ -204,6 +208,7 @@ export type Database = {
           syllabus_reference?: string;
           created_at?: string;
         };
+        Relationships: [];
       };
       profiles: {
         Row: {
@@ -233,6 +238,7 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [];
       };
       attempts: {
         Row: {
@@ -265,6 +271,7 @@ export type Database = {
           time_taken_seconds?: number;
           attempted_at?: string;
         };
+        Relationships: [];
       };
       ai_explanations: {
         Row: {
@@ -294,6 +301,7 @@ export type Database = {
           key_concepts?: string[];
           created_at?: string;
         };
+        Relationships: [];
       };
       user_weaknesses: {
         Row: {
@@ -320,6 +328,7 @@ export type Database = {
           total_attempts?: number;
           last_calculated_at?: string;
         };
+        Relationships: [];
       };
       quiz_sessions: {
         Row: {
@@ -364,6 +373,7 @@ export type Database = {
           completed_at?: string | null;
           score?: number | null;
         };
+        Relationships: [];
       };
     };
     Views: {
@@ -384,6 +394,9 @@ export type Database = {
         | "practical";
       language_pref: "sinhala" | "english" | "both";
       subscription_status: "free" | "premium" | "trial";
+    };
+    CompositeTypes: {
+      [_ in never]: never;
     };
   };
 };
