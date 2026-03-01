@@ -12,10 +12,10 @@ import type { LanguagePreference } from "@/types";
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id: questionId } = await params;
+    const { id: questionId } = params;
     const language = request.nextUrl.searchParams.get("lang") as
       | LanguagePreference
       | "all"
