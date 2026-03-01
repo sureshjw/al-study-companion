@@ -41,13 +41,17 @@ export default async function SubjectPage({ params }: SubjectPageProps) {
     .order("year", { ascending: false });
 
   // Group papers by year
-  const papersByYear = papers?.reduce((acc, paper) => {
-    if (!acc[paper.year]) {
-      acc[paper.year] = [];
-    }
-    acc[paper.year].push(paper);
-    return acc;
-  }, {} as Record<number, typeof papers>);
+  type PaperType = { id: string; year: number; paper_type: string; total_marks: number; duration_minutes: number };
+  const papersByYear = papers?.reduce(
+    (acc: Record<number, PaperType[]>, paper: PaperType) => {
+      if (!acc[paper.year]) {
+        acc[paper.year] = [];
+      }
+      acc[paper.year].push(paper);
+      return acc;
+    },
+    {} as Record<number, PaperType[]>
+  );
 
   const years = Object.keys(papersByYear || {})
     .map(Number)

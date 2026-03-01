@@ -35,13 +35,17 @@ export default async function PaperPage({ params }: PaperPageProps) {
   }
 
   // Group questions by part
-  const questionsByPart = paper.questions?.reduce((acc, q) => {
-    if (!acc[q.part_type]) {
-      acc[q.part_type] = [];
-    }
-    acc[q.part_type].push(q);
-    return acc;
-  }, {} as Record<PartType, typeof paper.questions>);
+  type QuestionType = { id: string; part_type: PartType; question_number: number; marks: number; topic_tags: string[] };
+  const questionsByPart = paper.questions?.reduce(
+    (acc: Record<PartType, QuestionType[]>, q: QuestionType) => {
+      if (!acc[q.part_type]) {
+        acc[q.part_type] = [];
+      }
+      acc[q.part_type].push(q);
+      return acc;
+    },
+    {} as Record<PartType, QuestionType[]>
+  );
 
   // Sort questions within each part
   Object.keys(questionsByPart || {}).forEach((part) => {
