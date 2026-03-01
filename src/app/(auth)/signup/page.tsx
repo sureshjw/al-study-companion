@@ -82,9 +82,10 @@ export default function SignupPage() {
 
       if (data.user) {
         // Update profile with language preference
-        const { error: profileError } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error: profileError } = await (supabase as any)
           .from("profiles")
-          .update({ language_preference: languagePreference, name } as any)
+          .update({ language_preference: languagePreference, name })
           .eq("id", data.user.id);
 
         if (profileError) {
