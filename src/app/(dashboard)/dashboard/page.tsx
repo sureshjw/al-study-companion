@@ -183,7 +183,7 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {weakTopics.map((topic) => (
+              {weakTopics.map((topic: { id: string; topics?: { name_en: string }; accuracy_percentage: number }) => (
                 <div key={topic.id} className="flex items-center justify-between">
                   <span className="font-medium">{topic.topics?.name_en}</span>
                   <Badge variant="destructive">

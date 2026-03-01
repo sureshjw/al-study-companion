@@ -126,7 +126,7 @@ export default async function SubjectPage({ params }: SubjectPageProps) {
               <div key={year}>
                 <h3 className="text-lg font-medium mb-3">{year}</h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {papersByYear?.[year]?.map((paper) => (
+                  {papersByYear?.[year]?.map((paper: { id: string; paper_type: string; total_marks: number; duration_minutes: number }) => (
                     <Link
                       key={paper.id}
                       href={`/practice/${subjectCode}/${year}/${paper.paper_type}`}

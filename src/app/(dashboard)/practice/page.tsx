@@ -44,7 +44,7 @@ export default async function PracticePage() {
 
       {/* Subject Cards */}
       <div className="grid md:grid-cols-3 gap-6">
-        {subjects?.map((subject) => (
+        {subjects?.map((subject: { id: string; code: string; name_en: string; name_si: string; papers?: { count: number }[] }) => (
           <Link
             key={subject.id}
             href={`/practice/${subject.code}`}
@@ -87,7 +87,7 @@ export default async function PracticePage() {
           Recent Papers
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {recentPapers?.map((paper) => (
+          {recentPapers?.map((paper: { id: string; year: number; paper_type: string; subjects?: { code: string; name_en: string } }) => (
             <Link
               key={paper.id}
               href={`/practice/${paper.subjects?.code}/${paper.year}/${paper.paper_type}`}

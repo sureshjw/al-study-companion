@@ -44,8 +44,8 @@ export default async function WeaknessPage() {
 
   // Group by subject
   const subjectStats: Record<string, { attempts: number; correct: number }> = {};
-  recentAttempts?.forEach((attempt) => {
-    const subjectCode = (attempt.questions as { question_type: string })?.question_type;
+  recentAttempts?.forEach((attempt: { is_correct: boolean; questions: { question_type: string } }) => {
+    const subjectCode = attempt.questions?.question_type;
     if (!subjectStats[subjectCode]) {
       subjectStats[subjectCode] = { attempts: 0, correct: 0 };
     }
@@ -58,8 +58,20 @@ export default async function WeaknessPage() {
   // Weak topics (below 60% accuracy)
   const weakTopics = weaknesses?.filter((w: { accuracy_percentage: number }) => w.accuracy_percentage < 60) || [];
 
+  // Type for weakness data
+  type WeaknessData = {
+    id: string;
+    accuracy_percentage: number;
+    total_attempts: number;
+    topics?: {
+      name_en: string;
+      name_si?: string;
+      subjects?: { name_en: string };
+    };
+  };
+
   // Prepare chart data
-  const chartData = weaknesses?.map((w) => ({
+  const chartData = weaknesses?.map((w: WeaknessData) => ({
     topic: w.topics?.name_en || "Unknown",
     accuracy: w.accuracy_percentage,
     attempts: w.total_attempts,
@@ -119,7 +131,7 @@ export default async function WeaknessPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {weakTopics.slice(0, 5).map((w) => (
+              {weakTopics.slice(0, 5).map((w: WeaknessData) => (
                 <div key={w.id} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div>
@@ -176,7 +188,7 @@ export default async function WeaknessPage() {
         <CardContent>
           {weaknesses && weaknesses.length > 0 ? (
             <div className="space-y-4">
-              {weaknesses.map((w) => (
+              {weaknesses.map((w: WeaknessData) => (
                 <div
                   key={w.id}
                   className="flex items-center justify-between p-3 rounded-lg bg-muted/50"

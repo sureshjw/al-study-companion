@@ -153,7 +153,7 @@ export default async function PaperPage({ params }: PaperPageProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-3">
-                    {questionsByPart?.[part]?.map((question) => (
+                    {questionsByPart?.[part]?.map((question: { id: string; question_number: number; marks: number; topic_tags: string[] }) => (
                       <Link
                         key={question.id}
                         href={`/practice/${subjectCode}/${year}/${paperType}/${part}/${question.question_number}`}
@@ -171,7 +171,7 @@ export default async function PaperPage({ params }: PaperPageProps) {
                                 <Badge variant="outline" className="text-xs">
                                   {question.marks} marks
                                 </Badge>
-                                {question.topic_tags.slice(0, 2).map((tag) => (
+                                {question.topic_tags.slice(0, 2).map((tag: string) => (
                                   <Badge
                                     key={tag}
                                     variant="secondary"
