@@ -82,13 +82,29 @@ export default function QuestionPage({ params }: QuestionPageProps) {
           }
         }
 
-        // Fetch the paper
+        // First, get the subject_id from the subject code
+        const { data: subject } = await supabase
+          .from("subjects")
+          .select("id")
+          .eq("code", resolvedParams!.subject)
+          .single();
+
+        if (!subject) {
+          toast({
+            title: "Subject not found",
+            description: "The requested subject could not be found.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        // Fetch the paper using subject_id
         const { data: paper } = await supabase
           .from("papers")
-          .select("id, subjects!inner(code)")
+          .select("id")
           .eq("paper_type", resolvedParams!.paper)
           .eq("year", parseInt(resolvedParams!.year))
-          .eq("subjects.code", resolvedParams!.subject)
+          .eq("subject_id", subject.id)
           .single();
 
         if (!paper) {

@@ -17,7 +17,18 @@ export default async function PaperPage({ params }: PaperPageProps) {
   const year = parseInt(yearStr);
   const supabase = await createServerSupabaseClient();
 
-  // Fetch paper with questions
+  // First, get the subject_id from the subject code
+  const { data: subject } = await supabase
+    .from("subjects")
+    .select("id")
+    .eq("code", subjectCode)
+    .single();
+
+  if (!subject) {
+    notFound();
+  }
+
+  // Fetch paper with questions using the subject_id
   const { data: paper } = await supabase
     .from("papers")
     .select(`
@@ -27,7 +38,7 @@ export default async function PaperPage({ params }: PaperPageProps) {
     `)
     .eq("paper_type", paperType)
     .eq("year", year)
-    .eq("subjects.code", subjectCode)
+    .eq("subject_id", subject.id)
     .single();
 
   if (!paper) {
