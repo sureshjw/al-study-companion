@@ -133,7 +133,7 @@ export default function QuizPage() {
       // Shuffle and take required number
       const shuffled = questions.sort(() => Math.random() - 0.5);
       const selectedQuestions = shuffled.slice(0, questionCount);
-      const questionIds = selectedQuestions.map((q) => q.id);
+      const questionIds = selectedQuestions.map((q: { id: string }) => q.id);
 
       // Create quiz session
       const { data: session, error: sessionError } = await supabase
