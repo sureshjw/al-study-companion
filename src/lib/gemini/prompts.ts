@@ -256,7 +256,7 @@ export function extractKeyConcepts(explanation: string): string[] {
   ];
 
   patterns.forEach((pattern) => {
-    const matches = explanation.matchAll(pattern);
+    const matches = Array.from(explanation.matchAll(pattern));
     for (const match of matches) {
       if (match[1] && match[1].length < 100) {
         concepts.push(match[1].trim());
