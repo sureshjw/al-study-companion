@@ -82,7 +82,6 @@ export default function SignupPage() {
 
       if (data.user) {
         // Update profile with language preference
-        // @ts-expect-error - Supabase generic type inference issue with .update()
         const { error: profileError } = await supabase
           .from("profiles")
           .update({ language_preference: languagePreference, name })
