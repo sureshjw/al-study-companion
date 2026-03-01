@@ -58,7 +58,8 @@ export async function POST(request: NextRequest) {
 
     if (user) {
       // Get user subscription status
-      const { data: profile } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: profile } = await (supabase as any)
         .from("profiles")
         .select("subscription_status")
         .eq("id", user.id)
@@ -66,6 +67,7 @@ export async function POST(request: NextRequest) {
 
       // For demo purposes, allow all requests
       // In production, implement proper rate limiting
+      void profile;
     }
 
     // Build conversation context

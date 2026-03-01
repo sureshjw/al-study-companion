@@ -18,7 +18,8 @@ export default async function DashboardLayout({
   }
 
   // Fetch user profile
-  const { data: profile } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: profile } = await (supabase as any)
     .from("profiles")
     .select("*")
     .eq("id", user.id)

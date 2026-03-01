@@ -56,7 +56,8 @@ export default function QuizSessionPage({ params }: QuizSessionPageProps) {
           data: { user },
         } = await supabase.auth.getUser();
         if (user) {
-          const { data: profile } = await supabase
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: profile } = await (supabase as any)
             .from("profiles")
             .select("language_preference")
             .eq("id", user.id)
