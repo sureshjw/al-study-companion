@@ -39,7 +39,7 @@ export default async function WeaknessPage() {
 
   // Calculate overall stats
   const totalAttempts = recentAttempts?.length || 0;
-  const correctAttempts = recentAttempts?.filter((a) => a.is_correct).length || 0;
+  const correctAttempts = recentAttempts?.filter((a: { is_correct: boolean }) => a.is_correct).length || 0;
   const overallAccuracy = totalAttempts > 0 ? (correctAttempts / totalAttempts) * 100 : 0;
 
   // Group by subject
@@ -56,7 +56,7 @@ export default async function WeaknessPage() {
   });
 
   // Weak topics (below 60% accuracy)
-  const weakTopics = weaknesses?.filter((w) => w.accuracy_percentage < 60) || [];
+  const weakTopics = weaknesses?.filter((w: { accuracy_percentage: number }) => w.accuracy_percentage < 60) || [];
 
   // Prepare chart data
   const chartData = weaknesses?.map((w) => ({

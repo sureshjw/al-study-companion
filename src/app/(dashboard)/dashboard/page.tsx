@@ -42,7 +42,7 @@ export default async function DashboardPage() {
 
   // Calculate stats
   const totalAttempts = recentAttempts?.length || 0;
-  const correctAttempts = recentAttempts?.filter((a) => a.is_correct).length || 0;
+  const correctAttempts = recentAttempts?.filter((a: { is_correct: boolean }) => a.is_correct).length || 0;
   const accuracy = totalAttempts > 0 ? (correctAttempts / totalAttempts) * 100 : 0;
 
   // Fetch weak topics

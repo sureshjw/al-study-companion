@@ -129,7 +129,7 @@ export default function QuizSessionPage({ params }: QuizSessionPageProps) {
 
             orderedQuestions.forEach((q) => {
               if (q.question_type === "mcq") {
-                q.options = options?.filter((o) => o.question_id === q.id);
+                q.options = options?.filter((o: { question_id: string }) => o.question_id === q.id);
               }
             });
           }
