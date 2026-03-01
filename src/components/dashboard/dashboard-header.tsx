@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { GraduationCap, LogOut, Moon, Settings, Sun, User } from "lucide-react";
+import { GraduationCap, LogOut, Moon, Settings, Sun, User as UserIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import {
@@ -88,7 +88,7 @@ export function DashboardHeader({ user, profile }: DashboardHeaderProps) {
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link href="/profile" className="cursor-pointer">
-                  <User className="mr-2 h-4 w-4" />
+                  <UserIcon className="mr-2 h-4 w-4" />
                   Profile
                 </Link>
               </DropdownMenuItem>
