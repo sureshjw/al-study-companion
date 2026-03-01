@@ -113,7 +113,7 @@ export default function QuizSessionPage({ params }: QuizSessionPageProps) {
         if (questionsData) {
           // Maintain order from question_ids
           const orderedQuestions = session.question_ids
-            .map((id: string) => questionsData.find((q) => q.id === id))
+            .map((id: string) => questionsData.find((q: { id: string }) => q.id === id))
             .filter(Boolean) as QuestionWithOptions[];
 
           // Load options for MCQs
